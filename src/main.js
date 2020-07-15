@@ -13,6 +13,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(res => {
   return res
 }, error => {
+  console.log(axios.defaults.baseURL)
   if (error.response.status === 403) {
     alert('Não autorizado!')
   } else if (error.response.status === 401) {
@@ -22,9 +23,10 @@ axios.interceptors.response.use(res => {
   throw error
 })
 
-axios.defaults.baseURL =
-  'https://8080-dd2524ec-6390-40eb-804a-1dfc91645782.ws-us02.gitpod.io/frases'
+axios.defaults.baseURL = 'http://localhost:8080/drink-water'
+
 Vue.config.productionTip = false
+
 new Vue({
   router,
   store,

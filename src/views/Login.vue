@@ -9,7 +9,7 @@
         class="form-control"
         required
         autofocus
-        v-model="nome"
+        v-model="username"
       />
     </div>
     <div class="form-group">
@@ -19,27 +19,27 @@
         id="inputPassword"
         class="form-control"
         required
-        v-model="senha"
+        v-model="password"
       />
     </div>
     <button class="btn btn-lg btn-success btn-block" type="submit">Entrar</button>
   </form>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex'
 export default {
-  name: "login",
-  data() {
+  name: 'login',
+  data () {
     return {
-      nome: "",
-      senha: ""
-    };
+      username: '',
+      password: ''
+    }
   },
   methods: {
-    ...mapActions(["login"]),
-    auth() {
-      this.login({ usuario: this.nome, senha: this.senha });
+    ...mapActions(['login']),
+    auth () {
+      this.login({ usuario: this.username, senha: this.password })
     }
   }
-};
+}
 </script>

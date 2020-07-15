@@ -1,7 +1,7 @@
-import Vue from  'vue'
-import Vuex from  'vuex'
-import axios from  'axios'
-import router from  '../router'
+import Vue from 'vue'
+import Vuex from 'vuex'
+import axios from 'axios'
+import router from '../router'
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
@@ -9,23 +9,23 @@ export default new Vuex.Store({
     usuario: null
   },
   mutations: {
-    setUsuario(state, usuario) {
+    setUsuario (state, usuario) {
       state.usuario = usuario
     },
-    setToken(state, token) {
+    setToken (state, token) {
       state.token = token
     },
-    logout(state) {
+    logout (state) {
       state.token = null
       state.usuario = null
     }
   },
   actions: {
-    login(context, { usuario, senha }) {
+    login (context, { usuario, senha }) {
       axios
         .post('login', {
-          nome: usuario,
-          senha: senha
+          username: usuario,
+          password: senha
         })
         .then(res => {
           console.log(res)
