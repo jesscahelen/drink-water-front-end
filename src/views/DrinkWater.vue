@@ -40,7 +40,7 @@
           <td>{{ historico.id }}</td>
           <td>{{ historico.consumoMl }}</td>
           <td>{{ historico.observacao }}</td>
-          <td>{{ historico.dataHora }}</td>
+          <td>{{ historico.datahora }}</td>
         </tr>
       </tbody>
     </table>
@@ -65,7 +65,7 @@ export default {
   methods: {
     cadastrar () {
       axios
-        .post('drink-water/historicoConsumo/addHistorico', {
+        .post('historicoConsumo/addHistorico', {
           consumoMl: this.consumoMl,
           observacao: this.observacao,
           usuario: this.usuario
