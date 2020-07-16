@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token: null,
-    usuario: null
+    usuario: null,
+    metadiaria: null
   },
   mutations: {
     setUsuario (state, usuario) {
@@ -15,9 +16,13 @@ export default new Vuex.Store({
     setToken (state, token) {
       state.token = token
     },
+    setMetaDiaria (state, metadiaria) {
+      state.metadiaria = metadiaria
+    },
     logout (state) {
       state.token = null
       state.usuario = null
+      state.metadiaria = null
     }
   },
   actions: {

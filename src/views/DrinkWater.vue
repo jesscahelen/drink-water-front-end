@@ -3,9 +3,9 @@
     <form @submit.prevent='cadastrar'>
       <h2>Drink Water</h2>
       <div class='form-group'>
-        <label for='consumoMl'>Quantidade</label>
+        <label for='consumoMl'>Quantidade em ml</label>
         <input
-          type='text'
+          type='number'
           id='consumoMl'
           class='form-control'
           required
@@ -24,14 +24,18 @@
     </form>
     <br />
     <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+      <!-- style é retornado pela função barraprogresso, pq tem o valor de width (que é o
+      quanto foi de progresso na barra, variável. o aria-valuenow é só um número, então
+      já coloquei a variável progresso.
+      -->
+      <div class="progress-bar" role="progressbar" :style="barraProgresso" :aria-valuenow="this.progresso" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <table class='table table-striped'>
       <thead>
         <tr>
           <th>Id</th>
           <th>Quantidade</th>
-          <th>Observacao</th>
+          <th>Observação</th>
           <th>Data/hora</th>
         </tr>
       </thead>
@@ -55,12 +59,17 @@ export default {
     return {
       consumoMl: '',
       observacao: '',
-      total: '',
+      total: 0,
+      progresso: 0,
       historicos: []
     }
   },
   computed: {
-    ...mapState(['usuario'])
+    ...mapState(['usuario', 'metadiaria']),
+
+    barraProgresso: function () {
+      return 'width: ' + this.progresso + '%'
+    }
   },
   methods: {
     cadastrar () {
@@ -75,6 +84,7 @@ export default {
           this.consumoMl = ''
           this.observacao = ''
           this.atualizar()
+          this.calculaMeta()
         })
         .catch(error => console.log(error))
     },
@@ -90,6 +100,16 @@ export default {
         .catch(error => console.log(error))
     },
     calculaMeta () {
+      axios
+        .get('/historicoConsumo/getConsumoHojePorUsuario/' + this.usuario, {
+          headers: { Accept: 'application/json' }
+        })
+        .then(res => {
+          console.log(res)
+          this.total = res.data
+          this.progresso = (this.total / this.metadiaria) * 100
+        })
+        .catch(error => console.log(error))
     }
   },
   created () {
