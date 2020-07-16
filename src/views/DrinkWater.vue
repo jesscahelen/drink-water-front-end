@@ -2,6 +2,7 @@
   <div>
     <form @submit.prevent='cadastrar'>
       <h2>Drink Water</h2>
+      <b-img v-bind='iconeAgua' src='../assets/solta.svg' alt='' />
       <div class='form-group'>
         <label for='consumoMl'>Quantidade em ml</label>
         <input
@@ -59,7 +60,8 @@ export default {
       observacao: '',
       total: 0,
       progresso: 0,
-      historicos: []
+      historicos: [],
+      iconeAgua: { height: '70px', width: '70px' }
     }
   },
   computed: {

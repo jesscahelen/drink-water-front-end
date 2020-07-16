@@ -2,6 +2,7 @@
 <div v-if="this.verificaUser()" class="text-center">
     <h1> Olá, {{ this.$store.state.usuario }}! </h1>
     <h4>Meta Diária: {{ this.verificaMeta() }}mL</h4>
+    <b-img v-bind='iconeAgua' src='../assets/copo-de-agua.svg' alt='' />
     <br>
     <form @submit.prevent='enviarMeta'>
         <div class='form-group'>
@@ -86,7 +87,8 @@ export default {
       metaDiaria: '',
       nomeNewUser: '',
       senhaNewUser: '',
-      removeUser: ''
+      removeUser: '',
+      iconeAgua: { height: '70px', width: '70px' }
     }
   },
   created () {
