@@ -52,7 +52,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'historicoConsumo',
   data () {
@@ -107,9 +107,16 @@ export default {
         .then(res => {
           console.log(res)
           this.total = res.data
+          if (this.metadiaria == null) {
+            this.getMeta()
+          }
           this.progresso = (this.total / this.metadiaria) * 100
         })
         .catch(error => console.log(error))
+    },
+    ...mapActions(['getUserInfo']),
+    getMeta () {
+      this.getUserInfo({ usuario: this.usuario })
     }
   },
   created () {

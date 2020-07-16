@@ -39,6 +39,18 @@ export default new Vuex.Store({
           router.push('/')
         })
         .catch(error => console.log(error))
+    },
+    getUserInfo (context, { usuario }) {
+      axios
+        .get('usuario/get/' + usuario, {
+          headers: { Accept: 'application/json' }
+        })
+        .then(res => {
+          console.log(res)
+          context.commit('setMetaDiaria', res.data.metadiaria)
+          router.push('/')
+        })
+        .catch(error => console.log(error))
     }
   },
   modules: {}
