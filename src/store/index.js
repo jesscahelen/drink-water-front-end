@@ -40,6 +40,7 @@ export default new Vuex.Store({
           console.log(res)
           context.commit('setUsuario', usuario)
           context.commit('setAutorizacoes', res.data.autorizacoes)
+          context.commit('setMetaDiaria', res.data.metadiaria)
           context.commit('setToken', res.data.token)
           router.push('/')
         })
