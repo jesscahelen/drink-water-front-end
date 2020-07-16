@@ -79,11 +79,11 @@ export default {
         })
         .then(res => {
           console.log(res)
-          this.$alert('Você está mais próximo(a) da sua meta! :)', 'Sucesso!', 'success')
           this.consumoMl = ''
           this.observacao = ''
           this.atualizar()
           this.calculaMeta()
+          this.$alert('Você está mais próximo(a) da sua meta! :)', 'Sucesso!', 'success')
         })
         .catch(error => console.log(error))
     },

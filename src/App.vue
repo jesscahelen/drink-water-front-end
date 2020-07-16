@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="container">
     <user-bar/>
-    <div id="nav" class="row text-center">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/drink-water">Drink Water</router-link> |
-      <router-link to="/usuario">Profile</router-link>
-    </div>
+    <b-nav id="nav" class="row text-center" align="center">
+      <b-nav-item active><router-link to="/">Home</router-link></b-nav-item>
+      <b-nav-item active><router-link to="/login">Login</router-link></b-nav-item>
+      <b-nav-item active><router-link to="/drink-water">Drink Water</router-link></b-nav-item>
+      <b-nav-item active><router-link to="/usuario">Profile</router-link></b-nav-item>
+    </b-nav>
     <router-view />
   </div>
 </template>

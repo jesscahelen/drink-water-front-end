@@ -1,29 +1,26 @@
 <template>
 <div v-if="this.verificaUser()" class="text-center">
     <h1> Olá, {{ this.$store.state.usuario }}! </h1>
-    <button v-on:click="logout()">logout</button>
     <h4>Meta Diária: {{ this.verificaMeta() }}mL</h4>
     <br>
     <form @submit.prevent='enviarMeta'>
         <div class='form-group'>
-            <label for='meta-diaria'>Inserir Nova Meta</label>
-            <input type="number" id='meta-diaria' style="display: inline-block;" class='form-control ' required v-model='metaDiaria'>
+            <label for='meta-diaria'>Alterar meta diária</label>
+            <input type="number" id='meta-diaria' placeholder='Nova meta diária (ml)' style="display: inline-block;" class='form-control ' required v-model='metaDiaria'>
         </div>
-        <button class='btn btn-lg btn-success btn-block' type='submit'>
-            Inserir Meta Diaria
+        <button class='btn btn-success btn-block' type='submit'>
+            Inserir
         </button>
     </form>
     <br>
     <form @submit.prevent='trocarSenha'>
       <h4>Trocar Senha</h4>
     <div class='form-group'>
-        <label for='antiga-senha'>Antiga Senha</label>
-        <input id='antiga-senha' type="password" style="display: inline-block;" class='form-control ' required v-model='antigaSenha'>
-        <label for='nova-senha'>NovaSenha</label>
-        <input id='nova-senha' type="password" style="display: inline-block;" class='form-control ' required v-model='novaSenha'>
+        <input id='antiga-senha' placeholder='Antiga senha' type="password" style="display: inline-block;" class='form-control ' required v-model='antigaSenha'>
+        <input id='nova-senha' placeholder='Nova senha' type="password" style="display: inline-block;" class='form-control ' required v-model='novaSenha'>
     </div>
-        <button class='btn btn-lg btn-success btn-block' type='submit'>
-            Trocar Senha
+        <button class='btn btn-success btn-block' type='submit'>
+            Salvar
         </button>
     </form>
     <br>
@@ -32,9 +29,9 @@
         <table class='table table-striped'>
         <thead>
         <tr>
-          <th>Usuario</th>
-          <th>Meta Diaria</th>
-          <th>Autorizacoes</th>
+          <th>Usuário</th>
+          <th>Meta Diária</th>
+          <th>Autorizações</th>
         </tr>
         </thead>
         <tbody>
@@ -46,26 +43,24 @@
       </tbody>
     </table>
     <br>
-    <label>Novo Usuario</label>
+    <label>Novo usuário</label>
     <form @submit.prevent='adicionarUser'>
     <div class='form-group'>
-        <label for='nome-new-user'>Nome</label>
-        <input id='nome-new-user' style="display: inline-block;" class='form-control ' required v-model='nomeNewUser'>
-        <label for='senha-new-user'>Senha</label>
-        <input id='senha-new-user' type="password" style="display: inline-block;" class='form-control ' required v-model='senhaNewUser'>
+        <input id='nome-new-user' placeholder='Nome' style="display: inline-block;" class='form-control ' required v-model='nomeNewUser'>
+        <input id='senha-new-user' placeholder='Senha' type="password" style="display: inline-block;" class='form-control ' required v-model='senhaNewUser'>
     </div>
-        <button class='btn btn-lg btn-success btn-block' type='submit'>
-            Adicionar Usuario
+        <button class='btn btn-success btn-block' type='submit'>
+            Adicionar
         </button>
     </form>
     <br>
     <form @submit.prevent='removerUser'>
     <div class='form-group'>
-        <label for='remove-user'>Remover Usuário (Insira Nome)</label>
-        <input id='remove-user' style="display: inline-block;" class='form-control ' required v-model='removeUser'>
+        <label for='remove-user'>Remover usuário</label>
+        <input id='remove-user' placeholder='Nome do usuário' style="display: inline-block;" class='form-control ' required v-model='removeUser'>
     </div>
-        <button class='btn btn-lg btn-success btn-block' type='submit'>
-            Remover Usuario
+        <button class='btn btn-success btn-block' type='submit'>
+            Remover
         </button>
     </form>
     </div>
@@ -138,10 +133,10 @@ export default {
         })
         .then(res => {
           console.log(res)
-          this.$alert('Meta inserida com sucesso!', 'Sucesso', 'success')
           this.$store.state.metadiaria = this.metaDiaria
           this.metaDiaria = ''
           this.atualizar()
+          this.$alert('Meta inserida com sucesso!', 'Sucesso', 'success')
         })
         .catch(error => {
           console.log(error)
@@ -157,13 +152,13 @@ export default {
         })
         .then(res => {
           console.log(res)
-          this.$alert('Senha alterada com sucesso!', 'Sucesso', 'success')
           this.antigaSenha = ''
           this.novaSenha = ''
+          this.$alert('Senha alterada com sucesso!', 'Sucesso', 'success')
         })
         .catch(error => {
           console.log(error)
-          alert(JSON.stringify(error))
+          this.$confirm('Você não tem permissão para realizar essa ação!', 'Erro', 'error')
         })
     },
     adicionarUser () {
@@ -175,14 +170,14 @@ export default {
         })
         .then(res => {
           console.log(res)
-          this.$alert('Usuário ' + this.nomeNewUser + ' adicionado!', 'Sucesso', 'success')
           this.nomeNewUser = ''
           this.senhaNewUser = ''
           this.atualizar()
+          this.$alert('Usuário ' + this.nomeNewUser + ' adicionado!', 'Sucesso', 'success')
         })
         .catch(error => {
           console.log(error)
-          alert(JSON.stringify(error))
+          this.$confirm('Você não tem permissão para realizar essa ação!', 'Erro', 'error')
         })
     },
     removerUser () {
@@ -193,13 +188,13 @@ export default {
           })
           .then(res => {
             console.log(res)
-            this.$alert('Usuário ' + this.removeUser + ' removido!', 'Sucesso', 'success')
             this.removeUser = ''
             this.atualizar()
+            this.$alert('Usuário ' + this.removeUser + ' removido!', 'Sucesso', 'success')
           })
           .catch(error => {
             console.log(error)
-            alert(JSON.stringify(error))
+            this.$confirm('Você não tem permissão para realizar essa ação!', 'Erro', 'error')
           })
       })
     },

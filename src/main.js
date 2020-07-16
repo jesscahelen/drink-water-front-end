@@ -1,8 +1,12 @@
 import Vue from 'vue'
+import './plugins/bootstrap-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import VueSimpleAlert from 'vue-simple-alert'
+
+Vue.use(VueSimpleAlert)
 
 axios.interceptors.request.use(config => {
   if (store.state.token) {

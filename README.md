@@ -1,4 +1,6 @@
-# drink-water-front-end
+## Drink Water
+
+Projeto em Vue.js que interage com o projeto [drink-water-back-end](https://github.com/jesscahelen/drink-water-back-end/). Após o login, um token JWT é armazenado na store. Por meio de um interceptor do Axios, toda requisição passa a utilizar o token JWT para autenticação.
 
 ## Project setup
 ```
