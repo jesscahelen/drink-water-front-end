@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: null,
     usuario: null,
+    autorizacoes: null,
     metadiaria: null
   },
   mutations: {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     setToken (state, token) {
       state.token = token
+    },
+    setAutorizacoes (state, autorizacoes) {
+      state.autorizacoes = autorizacoes
     },
     setMetaDiaria (state, metadiaria) {
       state.metadiaria = metadiaria
@@ -35,6 +39,7 @@ export default new Vuex.Store({
         .then(res => {
           console.log(res)
           context.commit('setUsuario', usuario)
+          context.commit('setAutorizacoes', res.data.autorizacoes)
           context.commit('setToken', res.data.token)
           router.push('/')
         })

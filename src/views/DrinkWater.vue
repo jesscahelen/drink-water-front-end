@@ -33,7 +33,6 @@
     <table class='table table-striped'>
       <thead>
         <tr>
-          <th>Id</th>
           <th>Quantidade</th>
           <th>Observação</th>
           <th>Data/hora</th>
@@ -41,10 +40,9 @@
       </thead>
       <tbody>
         <tr v-for='historico in historicos' :key='historico.id'>
-          <td>{{ historico.id }}</td>
-          <td>{{ historico.consumoMl }}</td>
+          <td>{{ historico.consumoMl }}mL</td>
           <td>{{ historico.observacao }}</td>
-          <td>{{ historico.datahora }}</td>
+          <td>{{ converterHora(historico.datahora) }}</td>
         </tr>
       </tbody>
     </table>
@@ -117,6 +115,14 @@ export default {
     ...mapActions(['getUserInfo']),
     getMeta () {
       this.getUserInfo({ usuario: this.usuario })
+    },
+    converterHora (date) {
+      var dateJS = new Date(date)
+      var hoje = new Date()
+      var ehHoje = hoje.getDate() === dateJS.getDate() && hoje.getMonth() === dateJS.getMonth() && hoje.getFullYear() === dateJS.getFullYear()
+      var dia = ehHoje ? 'Hoje' : ('0' + (dateJS.getDate())).slice(-2) + '-' + ('0' + (dateJS.getMonth() + 1)).slice(-2) + '-' + dateJS.getFullYear()
+      var hora = ('0' + ((dateJS.getHours() + 3))).slice(-2) + ':' + ('0' + dateJS.getMinutes()).slice(-2) + ':' + ('0' + dateJS.getSeconds()).slice(-2)
+      return dia + ' ' + hora
     }
   },
   created () {
