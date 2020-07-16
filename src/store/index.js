@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
 Vue.use(Vuex)
+
 export default new Vuex.Store({
   state: {
     token: null,
@@ -44,7 +45,12 @@ export default new Vuex.Store({
           context.commit('setToken', res.data.token)
           router.push('/')
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+          console.log(error.toJSON())
+          if (error.message.includes('401')) {
+            alert('Usuário ou senha incorretos!', 'Erro')
+          }
+        })
     },
     getUserInfo (context, { usuario }) {
       axios

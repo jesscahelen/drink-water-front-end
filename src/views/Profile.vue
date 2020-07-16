@@ -2,18 +2,20 @@
 <div v-if="this.verificaUser()" class="text-center">
     <h1> Olá, {{ this.$store.state.usuario }}! </h1>
     <button v-on:click="logout()">logout</button>
+    <h4>Meta Diária: {{ this.verificaMeta() }}mL</h4>
+    <br>
     <form @submit.prevent='enviarMeta'>
-      <h2>Meta Diaria: {{ this.verificaMeta() }}mL  Inserir Meta Diaria</h2>
-    <div class='form-group'>
-        <label for='meta-diaria'>Nova Meta</label>
-        <input type="number" id='meta-diaria' style="display: inline-block;" class='form-control ' required v-model='metaDiaria'>
-    </div>
+        <div class='form-group'>
+            <label for='meta-diaria'>Inserir Nova Meta</label>
+            <input type="number" id='meta-diaria' style="display: inline-block;" class='form-control ' required v-model='metaDiaria'>
+        </div>
         <button class='btn btn-lg btn-success btn-block' type='submit'>
             Inserir Meta Diaria
         </button>
     </form>
+    <br>
     <form @submit.prevent='trocarSenha'>
-      <h2>Trocar Senha</h2>
+      <h4>Trocar Senha</h4>
     <div class='form-group'>
         <label for='antiga-senha'>Antiga Senha</label>
         <input id='antiga-senha' type="password" style="display: inline-block;" class='form-control ' required v-model='antigaSenha'>
@@ -24,8 +26,9 @@
             Trocar Senha
         </button>
     </form>
+    <br>
     <div v-if="this.verificaAdmin()" class="text-center">
-        <h2>Seção Admins:</h2>
+        <h4>Seção Admins:</h4>
         <table class='table table-striped'>
         <thead>
         <tr>
@@ -42,6 +45,7 @@
         </tr>
       </tbody>
     </table>
+    <br>
     <label>Novo Usuario</label>
     <form @submit.prevent='adicionarUser'>
     <div class='form-group'>
@@ -54,6 +58,7 @@
             Adicionar Usuario
         </button>
     </form>
+    <br>
     <form @submit.prevent='removerUser'>
     <div class='form-group'>
         <label for='remove-user'>Remover Usuário (Insira Nome)</label>
@@ -133,7 +138,7 @@ export default {
         })
         .then(res => {
           console.log(res)
-          alert('Meta inserida com sucesso!')
+          this.$alert('Meta inserida com sucesso!', 'Sucesso', 'success')
           this.$store.state.metadiaria = this.metaDiaria
           this.metaDiaria = ''
           this.atualizar()
@@ -152,7 +157,7 @@ export default {
         })
         .then(res => {
           console.log(res)
-          alert('Senha alterada com sucesso!')
+          this.$alert('Senha alterada com sucesso!', 'Sucesso', 'success')
           this.antigaSenha = ''
           this.novaSenha = ''
         })
@@ -165,12 +170,14 @@ export default {
       axios
         .post('usuario/addUser', {
           nome: this.nomeNewUser,
-          senha: this.senhaNewUser
+          senha: this.senhaNewUser,
+          autorizacao: 'ROLE_USER'
         })
         .then(res => {
           console.log(res)
-          alert('Usuário ' + this.nomeNewUser + ' Adicionado com Sucesso!')
-          this.removeUser = ''
+          this.$alert('Usuário ' + this.nomeNewUser + ' adicionado!', 'Sucesso', 'success')
+          this.nomeNewUser = ''
+          this.senhaNewUser = ''
           this.atualizar()
         })
         .catch(error => {
@@ -179,20 +186,22 @@ export default {
         })
     },
     removerUser () {
-      axios
-        .post('usuario/deleteUser', {
-          nome: this.removeUser
-        })
-        .then(res => {
-          console.log(res)
-          alert('Usuário ' + this.removeUser + ' Removido com Sucesso!')
-          this.removeUser = ''
-          this.atualizar()
-        })
-        .catch(error => {
-          console.log(error)
-          alert(JSON.stringify(error))
-        })
+      this.$confirm('Você tem certeza?', 'Remover usuário', 'question').then(() => {
+        axios
+          .post('usuario/deleteUser', {
+            nome: this.removeUser
+          })
+          .then(res => {
+            console.log(res)
+            this.$alert('Usuário ' + this.removeUser + ' removido!', 'Sucesso', 'success')
+            this.removeUser = ''
+            this.atualizar()
+          })
+          .catch(error => {
+            console.log(error)
+            alert(JSON.stringify(error))
+          })
+      })
     },
     getAutorizacoes () {
       return this.autorizacoes.map(autorizacao => autorizacao.nome)

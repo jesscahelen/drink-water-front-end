@@ -15,7 +15,7 @@
       </div>
       <div class='form-group'>
         <label for='observacao'>Observação</label>
-        <textarea id='observacao' class='form-control' required v-model='observacao'>
+        <textarea id='observacao' class='form-control' v-model='observacao'>
         </textarea>
       </div>
       <button class='btn btn-lg btn-success btn-block' type='submit'>
@@ -79,6 +79,7 @@ export default {
         })
         .then(res => {
           console.log(res)
+          this.$alert('Você está mais próximo(a) da sua meta! :)', 'Sucesso!', 'success')
           this.consumoMl = ''
           this.observacao = ''
           this.atualizar()

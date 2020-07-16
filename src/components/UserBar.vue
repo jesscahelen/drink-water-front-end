@@ -1,8 +1,11 @@
 <template>
 <div v-if="this.token">
     Olá, {{ this.$store.state.usuario }}!
-    <button v-on:click="logout()">logout</button>
-    <p v-if="this.autorizacoes"> Usuário com autorizações: {{ getAutorizacoes() }}</p>
+    <span class='badge badge-info' v-if='this.autorizacoes'>{{ getAutorizacoes() }}</span>
+    <br>
+    <span class='badge badge-danger' v-on:click="logout()">logout</span>
+    <!--<button type='button' class='btn btn-danger btn-sm' v-on:click="logout()">logout</button>-->
+    <!--<p v-if="this.autorizacoes"> Usuário com autorizações: {{ getAutorizacoes() }} </p>-->
 </div>
 
 <div v-else>
